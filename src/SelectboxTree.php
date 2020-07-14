@@ -26,7 +26,7 @@ final class SelectboxTree
 	 * |  Windows
 	 *
 	 * @param mixed[][] $data raw database result in format [{"id", "name", "parent_id"}]
-	 * @param callable&(callable(mixed $name): string)|null $nameFormatter
+	 * @param callable(mixed $name): string|null $nameFormatter
 	 * @return string[] (id => user haystack)
 	 */
 	public function process(array $data, ?callable $nameFormatter = null): array

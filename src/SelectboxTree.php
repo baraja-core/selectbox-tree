@@ -99,7 +99,7 @@ final class SelectboxTree
 
 		$return = [];
 		foreach ($categories as $catKey => $category) {
-			if (isset($category['id'], $category['parent'], $category['name']) === false) {
+			if (array_key_exists('id', $category) === false || array_key_exists('parent', $category) === false || array_key_exists('name', $category) === false) {
 				throw new \InvalidArgumentException('Category "' . $catKey . '" must contain keys "id", "parent" and "name".');
 			}
 

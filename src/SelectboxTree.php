@@ -50,9 +50,6 @@ final class SelectboxTree
 
 
 	/**
-	 * @param string $table
-	 * @param string $primaryCol
-	 * @param string $parentCol
 	 * @param string[] $wheres
 	 * @return string
 	 */
@@ -65,13 +62,12 @@ final class SelectboxTree
 	}
 
 
-	/**
-	 * @param int $maxDepth
-	 */
 	public function setMaxDepth(int $maxDepth): void
 	{
 		if ($maxDepth < 1) {
 			$maxDepth = 1;
+		} elseif ($maxDepth > 1000) {
+			throw new \InvalidArgumentException('Max depth "' . $maxDepth . '" is too big. Maximum value is 1000.');
 		}
 		$this->maxDepth = $maxDepth;
 	}
@@ -81,8 +77,6 @@ final class SelectboxTree
 	 * Build category tree to simple selectbox array.
 	 *
 	 * @param string[][]|null[][]|null $categories
-	 * @param int $level
-	 * @param string|null $parent
 	 * @return mixed[][]
 	 */
 	private function serializeCategoriesToSelectbox(?array $categories, int $level = 0, ?string $parent = null): array
@@ -92,8 +86,7 @@ final class SelectboxTree
 		if ($level === 0) {
 			$usedIds = [];
 		}
-
-		if ($categories === null || $categories === [] || $level > $this->maxDepth) { // empty or recursion
+		if ($categories === null || $categories === [] || $level > $this->maxDepth) { // empty or infinity recursion
 			return [];
 		}
 
@@ -102,7 +95,6 @@ final class SelectboxTree
 			if (array_key_exists('id', $category) === false || array_key_exists('parent', $category) === false || array_key_exists('name', $category) === false) {
 				throw new \InvalidArgumentException('Category "' . $catKey . '" must contain keys "id", "parent" and "name".');
 			}
-
 			if ($category['parent'] === $parent) {
 				if (isset($usedIds[$category['id']]) === false) {
 					$return[$category['id']] = [
@@ -112,7 +104,6 @@ final class SelectboxTree
 					unset($categories[$catKey]);
 					$usedIds[$category['id']] = true;
 				}
-
 				if (($sub = $this->serializeCategoriesToSelectbox($categories, $level + 1, $category['id'])) !== []) {
 					foreach ($sub as $key => $value) {
 						$return[$key] = $value;

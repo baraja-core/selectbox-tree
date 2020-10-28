@@ -9,8 +9,7 @@ final class SelectboxTree
 {
 	private const NBSP = "\xC2\xA0\xC2\xA0\xC2\xA0";
 
-	/** @var int */
-	private $maxDepth = 32;
+	private int $maxDepth = 32;
 
 
 	/**

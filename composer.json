@@ -15,7 +15,7 @@
 		"phpstan/phpstan": "^0.12.52",
 		"tracy/tracy": "^2.7",
 		"phpstan/phpstan-nette": "^0.12.9",
-		"symplify/easy-coding-standard": "^8.3"
+		"symplify/easy-coding-standard": "^7.2"
 	},
 	"autoload": {
 		"classmap": [

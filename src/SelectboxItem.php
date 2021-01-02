@@ -36,7 +36,7 @@ final class SelectboxItem
 		return [
 			'id' => $this->id,
 			'name' => $this->name,
-			'parent_id' => $this->parentId,
+			'parent' => $this->parentId,
 		];
 	}
 }

@@ -16,17 +16,8 @@ jobs:
 
     - name: Install composer deps
       run: |
-        composer create-project nette/code-checker temp/code-checker ^3 --no-progress
-        composer create-project nette/coding-standard temp/coding-standard ^3 --no-progress
-
         # Install app deps
         composer install --no-interaction --prefer-dist
-
-    # Check code checker and coding standards
-    - name: Check coding standards
-      run: |
-        php temp/code-checker/code-checker --short-arrays --strict-types --fix --no-progress
-        php temp/coding-standard/ecs check src --config temp/coding-standard/coding-standard-php74.yml
 
     - name: Check PHPStan rules
       run: composer phpstan

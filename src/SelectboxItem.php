@@ -16,6 +16,10 @@ final class SelectboxItem
 	private $parentId;
 
 
+	/**
+	 * @param int|string $id
+	 * @param int|string|null $parentId
+	 */
 	public function __construct($id, string $name, $parentId = null)
 	{
 		$this->id = $id;

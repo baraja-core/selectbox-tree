@@ -34,7 +34,7 @@ final class SelectboxTree
 		$categories = [];
 		foreach ($data as $item) {
 			if ($item instanceof SelectboxItem) {
-				$categoryItem = $item;
+				$categoryItem = $item->toArray();
 			} else {
 				$categoryItem = [
 					'id' => $item['id'],

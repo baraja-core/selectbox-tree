@@ -26,18 +26,22 @@ final class SelectboxTree
 	 * |  |  iMac
 	 * |  Windows
 	 *
-	 * @param mixed[][] $data raw database result in format [{"id", "name", "parent_id"}]
+	 * @param mixed[][]|SelectboxItem[] $data raw database result in format [{"id", "name", "parent_id"}]
 	 * @return string[] (id => user haystack)
 	 */
 	public function process(array $data): array
 	{
 		$categories = [];
 		foreach ($data as $item) {
-			$categories[] = [
-				'id' => $item['id'],
-				'name' => $this->nameFormatter === null ? (string) $item['name'] : $this->nameFormatter->format($item['name']),
-				'parent' => $item['parent_id'],
-			];
+			if ($item instanceof SelectboxItem) {
+				$categories[] = $item;
+			} else {
+				$categories[] = [
+					'id' => $item['id'],
+					'name' => $this->nameFormatter === null ? (string) $item['name'] : $this->nameFormatter->format($item['name']),
+					'parent' => $item['parent_id'],
+				];
+			}
 		}
 
 		$return = [];

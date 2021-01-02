@@ -11,6 +11,8 @@ final class SelectboxTree
 
 	private int $maxDepth = 32;
 
+	private ?NameFormatter $nameFormatter = null;
+
 
 	/**
 	 * Build tree of categories or items to simple-plain selectbox.
@@ -25,16 +27,15 @@ final class SelectboxTree
 	 * |  Windows
 	 *
 	 * @param mixed[][] $data raw database result in format [{"id", "name", "parent_id"}]
-	 * @param callable(mixed $name): string|null $nameFormatter
 	 * @return string[] (id => user haystack)
 	 */
-	public function process(array $data, ?callable $nameFormatter = null): array
+	public function process(array $data): array
 	{
 		$categories = [];
 		foreach ($data as $item) {
 			$categories[] = [
 				'id' => $item['id'],
-				'name' => (string) ($nameFormatter === null ? $item['name'] : $nameFormatter($item['name'])),
+				'name' => $this->nameFormatter === null ? (string) $item['name'] : $this->nameFormatter->format($item['name']),
 				'parent' => $item['parent_id'],
 			];
 		}
@@ -69,6 +70,12 @@ final class SelectboxTree
 			throw new \InvalidArgumentException('Max depth "' . $maxDepth . '" is too big. Maximum value is 1000.');
 		}
 		$this->maxDepth = $maxDepth;
+	}
+
+
+	public function setNameFormatter(NameFormatter $nameFormatter): void
+	{
+		$this->nameFormatter = $nameFormatter;
 	}
 
 

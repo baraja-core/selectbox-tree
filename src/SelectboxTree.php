@@ -34,14 +34,19 @@ final class SelectboxTree
 		$categories = [];
 		foreach ($data as $item) {
 			if ($item instanceof SelectboxItem) {
-				$categories[] = $item;
+				$categoryItem = $item;
 			} else {
-				$categories[] = [
+				$categoryItem = [
 					'id' => $item['id'],
-					'name' => $this->nameFormatter === null ? (string) $item['name'] : $this->nameFormatter->format($item['name']),
+					'name' => (string) $item['name'],
 					'parent' => $item['parent_id'],
 				];
 			}
+			if ($this->nameFormatter !== null) {
+				$categoryItem['name'] = $this->nameFormatter->format($categoryItem['name']);
+			}
+
+			$categories[] = $categoryItem;
 		}
 
 		$return = [];

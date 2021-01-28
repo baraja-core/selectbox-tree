@@ -15,7 +15,6 @@
 		"phpstan/phpstan": "^0.12.52",
 		"tracy/tracy": "^2.8",
 		"phpstan/phpstan-nette": "^0.12.9",
-		"symplify/easy-coding-standard": "^7.2",
 		"spaze/phpstan-disallowed-calls": "^1.1"
 	},
 	"autoload": {

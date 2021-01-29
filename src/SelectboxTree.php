@@ -62,8 +62,12 @@ final class SelectboxTree
 	 * @param string[] $wheres
 	 * @return string
 	 */
-	public function sqlBuilder(string $table, string $primaryCol = 'name', string $parentCol = 'parent_id', array $wheres = []): string
-	{
+	public function sqlBuilder(
+		string $table,
+		string $primaryCol = 'name',
+		string $parentCol = 'parent_id',
+		array $wheres = []
+	): string {
 		return 'SELECT `id`, `' . $primaryCol . '`, `' . $parentCol . '` '
 			. 'FROM `' . $table . '` '
 			. ($wheres !== [] ? 'WHERE (' . implode(') AND (', $wheres) . ') ' : '')
@@ -108,7 +112,11 @@ final class SelectboxTree
 
 		$return = [];
 		foreach ($categories as $catKey => $category) {
-			if (array_key_exists('id', $category) === false || array_key_exists('parent', $category) === false || array_key_exists('name', $category) === false) {
+			if (
+				array_key_exists('id', $category) === false
+				|| array_key_exists('parent', $category) === false
+				|| array_key_exists('name', $category) === false
+			) {
 				throw new \InvalidArgumentException('Category "' . $catKey . '" must contain keys "id", "parent" and "name".');
 			}
 			if ($category['parent'] === $parent) {

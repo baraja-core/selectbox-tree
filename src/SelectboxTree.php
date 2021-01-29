@@ -79,7 +79,7 @@ final class SelectboxTree
 	{
 		if ($maxDepth < 1) {
 			$maxDepth = 1;
-		} elseif ($maxDepth > 1000) {
+		} elseif ($maxDepth > 1_000) {
 			throw new \InvalidArgumentException('Max depth "' . $maxDepth . '" is too big. Maximum value is 1000.');
 		}
 		$this->maxDepth = $maxDepth;

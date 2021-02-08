@@ -98,10 +98,10 @@ final class SelectboxTree
 	 * @return mixed[][]
 	 */
 	private function serializeCategoriesToSelectbox(
-        ?array $categories,
-        int $level = 0,
-        int|string |null $parent = null
-    ): array
+		?array $categories,
+		int $level = 0,
+		int|string |null $parent = null
+	): array
 	{
 		static $usedIds = [];
 

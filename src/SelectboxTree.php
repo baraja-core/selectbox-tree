@@ -60,7 +60,6 @@ final class SelectboxTree
 
 	/**
 	 * @param string[] $wheres
-	 * @return string
 	 */
 	public function sqlBuilder(
 		string $table,
@@ -96,10 +95,9 @@ final class SelectboxTree
 	 * Build category tree to simple selectbox array.
 	 *
 	 * @param string[][]|null[][]|null $categories
-	 * @param int|string|null $parent
 	 * @return mixed[][]
 	 */
-	private function serializeCategoriesToSelectbox(?array $categories, int $level = 0, $parent = null): array
+	private function serializeCategoriesToSelectbox(?array $categories, int $level = 0, int|string|null $parent = null): array
 	{
 		static $usedIds = [];
 

@@ -101,8 +101,7 @@ final class SelectboxTree
 		?array $categories,
 		int $level = 0,
 		int|string |null $parent = null
-	): array
-	{
+	): array {
 		static $usedIds = [];
 
 		if ($level === 0) {

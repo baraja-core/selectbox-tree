@@ -97,7 +97,11 @@ final class SelectboxTree
 	 * @param string[][]|null[][]|null $categories
 	 * @return mixed[][]
 	 */
-	private function serializeCategoriesToSelectbox(?array $categories, int $level = 0, int|string|null $parent = null): array
+	private function serializeCategoriesToSelectbox(
+        ?array $categories,
+        int $level = 0,
+        int|string |null $parent = null
+    ): array
 	{
 		static $usedIds = [];
 

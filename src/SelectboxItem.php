@@ -11,10 +11,10 @@ final class SelectboxItem
 
 	private string $name;
 
-	private int|string|null $parentId;
+	private int|string |null $parentId;
 
 
-	public function __construct(int|string $id, string $name, int|string|null $parentId = null)
+	public function __construct(int|string $id, string $name, int|string |null $parentId = null)
 	{
 		$this->id = $id;
 		$this->name = $name;

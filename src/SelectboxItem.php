@@ -7,18 +7,11 @@ namespace Baraja\SelectboxTree;
 
 final class SelectboxItem
 {
-	private int|string $id;
-
-	private string $name;
-
-	private int|string |null $parentId;
-
-
-	public function __construct(int|string $id, string $name, int|string |null $parentId = null)
-	{
-		$this->id = $id;
-		$this->name = $name;
-		$this->parentId = $parentId;
+	public function __construct(
+		private int|string $id,
+		private string $name,
+		private int|string |null $parentId = null
+	) {
 	}
 
 

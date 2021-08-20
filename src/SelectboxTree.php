@@ -38,7 +38,7 @@ final class SelectboxTree
 			} else {
 				$categoryItem = [
 					'id' => $item['id'],
-					'name' => (string) $item['name'],
+					'name' => $this->normalizeName((string) $item['name']),
 					'parent' => $item['parent_id'],
 				];
 			}
@@ -123,7 +123,7 @@ final class SelectboxTree
 			if ($category['parent'] === $parent) {
 				if (isset($usedIds[$category['id']]) === false) {
 					$return[$category['id']] = [
-						'name' => (string) $category['name'],
+						'name' => $this->normalizeName((string) $category['name']),
 						'level' => $level,
 					];
 					unset($categories[$catKey]);
@@ -138,5 +138,15 @@ final class SelectboxTree
 		}
 
 		return $return;
+	}
+
+
+	private function normalizeName(string $name): string
+	{
+		if (str_starts_with($name, 'T:{') && class_exists('Baraja\Localization\Translation')) {
+			return (string) (new \Baraja\Localization\Translation($name));
+		}
+
+		return $name;
 	}
 }

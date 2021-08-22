@@ -16,7 +16,7 @@ final class SelectboxItem
 
 
 	/**
-	 * @return string[]|int[]|null[]
+	 * @return array{id: int|string, name: string, parentId: int|string|null}
 	 */
 	public function toArray(): array
 	{

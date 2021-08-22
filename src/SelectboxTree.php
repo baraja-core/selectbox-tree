@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Baraja\SelectboxTree;
 
 
+use Baraja\Localization\Translation;
+
 final class SelectboxTree
 {
 	private const NBSP = "\xC2\xA0\xC2\xA0\xC2\xA0";
@@ -26,8 +28,8 @@ final class SelectboxTree
 	 * |  |  iMac
 	 * |  Windows
 	 *
-	 * @param mixed[][]|SelectboxItem[] $data raw database result in format [{"id", "name", "parent_id"}]
-	 * @return string[] (id => user haystack)
+	 * @param array<int, array{id: int|string, name: string, parentId: int|string|null}>|SelectboxItem[] $data
+	 * @return array<int|string, string> (id => user haystack)
 	 */
 	public function process(array $data): array
 	{
@@ -59,7 +61,7 @@ final class SelectboxTree
 
 
 	/**
-	 * @param string[] $wheres
+	 * @param array<int, string> $wheres
 	 */
 	public function sqlBuilder(
 		string $table,
@@ -95,8 +97,8 @@ final class SelectboxTree
 	/**
 	 * Build category tree to simple selectbox array.
 	 *
-	 * @param string[][]|null[][]|null $categories
-	 * @return mixed[][]
+	 * @param array<int, array{id: int|string, name: string, parent: int|string|null}>|null $categories
+	 * @return array<int, array{name: string, level: int}>
 	 */
 	private function serializeCategoriesToSelectbox(
 		?array $categories,
@@ -130,10 +132,9 @@ final class SelectboxTree
 					unset($categories[$catKey]);
 					$usedIds[$category['id']] = true;
 				}
-				if (($sub = $this->serializeCategoriesToSelectbox($categories, $level + 1, $category['id'])) !== []) {
-					foreach ($sub as $key => $value) {
-						$return[$key] = $value;
-					}
+				$sub = $this->serializeCategoriesToSelectbox($categories, $level + 1, $category['id']);
+				foreach ($sub as $key => $value) {
+					$return[$key] = $value;
 				}
 			}
 		}
@@ -145,7 +146,7 @@ final class SelectboxTree
 	private function normalizeName(string $name): string
 	{
 		if (str_starts_with($name, 'T:{') && class_exists('Baraja\Localization\Translation')) {
-			return (string) (new \Baraja\Localization\Translation($name));
+			return (string) (new Translation($name));
 		}
 
 		return $name;

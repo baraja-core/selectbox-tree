@@ -28,7 +28,7 @@ final class SelectboxTree
 	 * |  |  iMac
 	 * |  Windows
 	 *
-	 * @param array<int, array{id: int|string, name: string, parentId: int|string|null}>|SelectboxItem[] $data
+	 * @param array<int, array{id: int|string, name: string, parent_id: int|string|null}>|SelectboxItem[] $data
 	 * @return array<int|string, string> (id => user haystack)
 	 */
 	public function process(array $data): array
@@ -47,7 +47,6 @@ final class SelectboxTree
 			if ($this->nameFormatter !== null) {
 				$categoryItem['name'] = $this->nameFormatter->format($categoryItem['name']);
 			}
-
 			$categories[] = $categoryItem;
 		}
 
@@ -98,7 +97,7 @@ final class SelectboxTree
 	 * Build category tree to simple selectbox array.
 	 *
 	 * @param array<int, array{id: int|string, name: string, parent: int|string|null}>|null $categories
-	 * @return array<int, array{name: string, level: int}>
+	 * @return array<int|string, array{name: string, level: int}>
 	 */
 	private function serializeCategoriesToSelectbox(
 		?array $categories,
@@ -116,13 +115,6 @@ final class SelectboxTree
 
 		$return = [];
 		foreach ($categories as $catKey => $category) {
-			if (
-				array_key_exists('id', $category) === false
-				|| array_key_exists('parent', $category) === false
-				|| array_key_exists('name', $category) === false
-			) {
-				throw new \InvalidArgumentException('Category "' . $catKey . '" must contain keys "id", "parent" and "name".');
-			}
 			if ($category['parent'] === $parent) {
 				if (isset($usedIds[$category['id']]) === false) {
 					$return[$category['id']] = [

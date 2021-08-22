@@ -65,12 +65,13 @@ final class SelectboxTree
 		string $table,
 		string $primaryCol = 'name',
 		string $parentCol = 'parent_id',
-		array $wheres = []
+		array $wheres = [],
+		?string $orderCol = null,
 	): string {
 		return 'SELECT `id`, `' . $primaryCol . '`, `' . $parentCol . '` '
 			. 'FROM `' . $table . '` '
 			. ($wheres !== [] ? 'WHERE (' . implode(') AND (', $wheres) . ') ' : '')
-			. 'ORDER BY `' . $primaryCol . '` ASC';
+			. 'ORDER BY `' . ($orderCol ?? $primaryCol) . '` ASC';
 	}
 
 

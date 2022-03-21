@@ -10,7 +10,7 @@ final class SelectboxItem
 	public function __construct(
 		private int|string $id,
 		private string $name,
-		private int|string |null $parentId = null
+		private int|string |null $parentId = null,
 	) {
 	}
 

@@ -102,7 +102,7 @@ final class SelectboxTree
 	private function serializeCategoriesToSelectbox(
 		?array $categories,
 		int $level = 0,
-		int|string |null $parent = null
+		int|string |null $parent = null,
 	): array {
 		static $usedIds = [];
 

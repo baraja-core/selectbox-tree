@@ -40,7 +40,7 @@ final class SelectboxTree
 			} else {
 				$categoryItem = [
 					'id' => $item['id'],
-					'name' => $this->normalizeName((string) $item['name']),
+					'name' => $this->normalizeName($item['name']),
 					'parent' => $item['parent_id'],
 				];
 			}
@@ -69,10 +69,14 @@ final class SelectboxTree
 		array $wheres = [],
 		?string $orderCol = null,
 	): string {
-		return 'SELECT `id`, `' . $primaryCol . '`, `' . $parentCol . '` '
-			. 'FROM `' . $table . '` '
-			. ($wheres !== [] ? 'WHERE (' . implode(') AND (', $wheres) . ') ' : '')
-			. 'ORDER BY `' . ($orderCol ?? $primaryCol) . '` ASC';
+		return sprintf(
+			'SELECT `id`, `%s`, `%s` FROM `%s` %s ORDER BY `%s` ASC',
+			$primaryCol,
+			$parentCol,
+			$table,
+			$wheres !== [] ? 'WHERE (' . implode(') AND (', $wheres) . ') ' : '',
+			$orderCol ?? $primaryCol,
+		);
 	}
 
 
@@ -81,7 +85,7 @@ final class SelectboxTree
 		if ($maxDepth < 1) {
 			$maxDepth = 1;
 		} elseif ($maxDepth > 1_000) {
-			throw new \InvalidArgumentException('Max depth "' . $maxDepth . '" is too big. Maximum value is 1000.');
+			throw new \InvalidArgumentException(sprintf('Max depth "%d" is too big. Maximum value is 1000.', $maxDepth));
 		}
 		$this->maxDepth = $maxDepth;
 	}
@@ -118,7 +122,7 @@ final class SelectboxTree
 			if ($category['parent'] === $parent) {
 				if (isset($usedIds[$category['id']]) === false) {
 					$return[$category['id']] = [
-						'name' => $this->normalizeName((string) $category['name']),
+						'name' => $this->normalizeName($category['name']),
 						'level' => $level,
 					];
 					unset($categories[$catKey]);
@@ -137,7 +141,7 @@ final class SelectboxTree
 
 	private function normalizeName(string $name): string
 	{
-		if (str_starts_with($name, 'T:{') && class_exists('Baraja\Localization\Translation')) {
+		if (class_exists('Baraja\Localization\Translation') && str_starts_with($name, 'T:{')) {
 			return (string) (new Translation($name));
 		}
 
